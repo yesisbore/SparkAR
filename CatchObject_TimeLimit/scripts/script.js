@@ -25,6 +25,7 @@ export let firstKeywords = "out";
 export let keyword = "out";
 
 let score = 0 ;
+let maxScore = 10 ;
 let point = 0 ;
 let index = 0 ;
 let isInitialize = false;
@@ -44,12 +45,12 @@ function PrintArray(array){
 
 const Patches = require('Patches');
 
-const positiveFirstKeywords =  ['공약평가'    ,'교육청평가'  ,'무상교육','교육공간','진로진학','미래교육','1인1스마트기기','블렌디드수업','AI기반 학습 확대','부산교육빅데이터센터 도입','메타버스 기반 수업','청소년글로벌센터','청소년창업학교','영화학교 설립','부산예술학교 설립','우리동네 자람터'];
-const positiveSecondKeywords = ['3년연속 최대','3년연속 우수','전면실현','완전혁신','지원강화','전환선도',' '             ,' '          ,' '              ,' '                       ,' '                ,' '               ,' '            ,' '           ,' '                ,' '             ];
-const positiveLength = firstKeywords.length;
+const positiveFirstKeywords =  ['공약평가'    ,'교육청평가'  ,'무상교육','교육공간','진로진학','미래교육','1인1스마트기기','블렌디드수업','AI기반 학습 확대','부산교육'         ,'메타버스 기반 수업','청소년글로벌센터','청소년창업학교','영화학교 설립','부산예술학교 설립','우리동네 자람터','부산발 교육혁명'];
+const positiveSecondKeywords = ['3년연속 최대','3년연속 우수','전면실현','완전혁신','지원강화','전환선도',' '             ,' '          ,' '              ,'빅데이터센터 도입' ,' '                ,' '               ,' '            ,' '           ,' '                ,' '             ,' '];
+const positiveLength = 17;
 
-const negativeKeywords = ['부산발 교육혁명','음주운전','불통행정','획일적 평준화','학력깜깜이'];
-const negativeLength = negativeKeywords.length;
+const negativeKeywords = ['부정선거','음주운전','불통행정','흑색선전','부정입학','획일적 평준화','학력깜깜이'];
+const negativeLength = 7;
 
 const addValue = 1;
 const subValue = -1;
@@ -81,21 +82,21 @@ function SetKeyword(){
 
   let probability = Math.random() ;
 
-  if(probability <= 0.5){
+  if(probability <= 0.7){
     let i = index % positiveLength;
     keyword  = positiveFirstKeywords [i] ;
-    
+
     if(positiveSecondKeywords[i] != ' '){
       keyword  += '\n' + positiveSecondKeywords[i];
     }
     point = addValue;
-    Print("SetKeyword : Positive / Index : " + i);
+    Print("SetKeyword : Positive / Index : " + index);
   }
   else{
     let i = index % negativeLength;
     keyword = negativeKeywords[i];
     point = subValue;
-    Print("SetKeyword : Negative / Index : " + i);
+    Print("SetKeyword : Negative / Index : " + index);
   }
 
   index ++;
@@ -105,5 +106,16 @@ function SetKeyword(){
 function AddScore(){
   Print('Add Score Score : '+score+" point :"+ point);
   score += point;
-  Patches.inputs.setScalar('score', score);
+  if(score < 0){
+    score = 0;
+  }
+  let result = score + " / " + maxScore;
+
+  Patches.inputs.setScalar('point', point);
+  Patches.inputs.setString('score', result);
+
+  if(maxScore - score == 0){
+    Print('Game Win');
+    Patches.inputs.setBoolean("GameResult",true)
+  }
 }
