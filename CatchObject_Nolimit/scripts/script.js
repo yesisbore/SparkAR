@@ -102,8 +102,8 @@ function SetKeyword(){
   }
 
   let probability = Math.random() ;
-
-  if(probability <= 0.7){
+  Print("확률 : " + probability);
+  if(probability <= 0.75){
     let i = index % positiveLength;
     keyword  = positiveFirstKeywords [i] ;
 
