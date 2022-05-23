@@ -67,8 +67,8 @@ const positiveSecondKeywords =
 
 const positiveLength = 32;
 
-const negativeKeywords = ['이념논쟁','특혜계약지시','민주교육철폐','체벌찬성','아빠찬스','근무중 골프','음주운전','불통행정','흑색선전','획일적 평준화'];
-const negativeLength = 10;
+const negativeKeywords = ['이념논쟁','특혜계약지시','민주교육철폐','체벌찬성','아빠찬스','근무중 골프','음주운전','불통행정','흑색선전','획일적 평준화','일제고사 부활'];
+const negativeLength = 11;
 
 const addValue = 1;
 const subValue = -1;
